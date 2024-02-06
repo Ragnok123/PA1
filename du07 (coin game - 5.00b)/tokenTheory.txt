@@ -1,0 +1,103 @@
+3 5 3 6 1
+A: 3            A: 3+5      A: 3        A: 1
+B: 1+6          B: 3+6      B: 5+3      B: 3+6
+A: 5+3          A: 1        A: 6+1      A: 
+
+10/8            9/9         10/8
+
+
+1 5 3 6 2 1 8 2 3
+
+A: 1+5      (second is bigger than first) => maximize (and flag)
+B: 3        (second is smaller than first) => only one
+A: 3        (left corner and right corner. Left corner is bigger)... remove flag
+B: 2+8      (second is bigger than first) => maximize (and set flag). 
+A: 6+2      (second is smaller than first... But sum of two is bigger than first) => add flag
+B: 1        (last)
+
+A: 17
+B: 14
+
+ITS RECURSION TASK!!!!!
+
+We hawe i1, i2, i3, i4 ......... j values and two players
+[I; J];
+
+if player takes I 
+    if opponent takes 1
+        opponent takes I+1
+            player takes I+2;J          -> rekurze
+        opponent takes J
+            player takes I+1; J-1          -> rekurze
+    if opponent takes 2
+        opponent takes I+1, I+2
+            player takes I+3, J
+        opponent takes J, J-1
+            player takes I, J-2
+        opponent takes I+1, J
+            player takes I+2, J-1           -> rekurze
+
+if player takes J
+    if opponent takes 1
+        opponent takes I
+            player takes I+1, J-1          -> rekurze
+        opponent takes J-1
+            player takes I, J-2          -> rekurze
+    if oponnent takes 2
+        opponent takes I, I+1
+            player takes I+2, J-1
+        opponent takes J-1, J-2
+            player takes I, J-3
+        opponent takes I, J-1
+            player takes I+1, J-2
+
+if player takes I and I+1
+    if opponent takes 1
+        opponent takes I+2
+            player always takes I+3, J           -> rekurze
+        opponent takes J 
+            player always takes I+2, J-1          -> rekurze
+    if opponent takes 2
+        opponent takes I+2, I+3
+            player always takes I+4, J 
+        opponent takes J, J-1
+            player always takes I+2, J-2
+        opponent takes I+2, J 
+            player always takes I+3, J-1
+
+if player takes J and J-1
+    if opponent takes 1
+        opponent takes I 
+            player always takes I+1, J-2          -> rekurze
+        opponent takes J-2
+            player always takes I, J-3          -> rekurze
+    if opponent takes 2
+        opponent takes I, I+1
+            player always takes I+2, J-2
+        opponent takes J-2, J-3
+            player always takes I, J-4
+        opponent takes I, J-2
+            player always takes I+1, J-3
+
+if player takes I and J 
+    if opponent takes 1
+        opponent takes I+1
+            player always takes I+2, J-1          -> rekurze
+        opponent takes J-1
+            player always takes I+1, J-2          -> rekurze
+    if opponent takes 2
+        opponent takes I+1, I+2
+            player always takes I+3, J-1
+        opponent tales J-1, J-2
+            player always takes I+1, J-3
+        opponent takes I+1, J-1
+            player always takes I+2, J-2
+
+Ас-саламу алейкум. Хотел бы поинтересоваться насчёт рекурсии (теперь эта задача на рекурсию и она обязательна).
+У меня есть игра, в которой 2 игрока играют в монеты, начинает игрок А. Усть несколько вариантов хода: 1 монета слева, 1 монета справа, две монеты слева, две монеты справа, одна слева и одна справа.
+К тому же, если игрок взял две монеты, то в следующем ходу он может взять только одну монету. Каждый игрок играем максимально оптимально с целью получить как можно больше монет.
+Я реализовал этот алгоритм, и с рекурсией он возвращает количество монет, которые игрок (А) набрал.
+Проблема однако в том, что нужно кроме количества написать какие ходы игрок сделал.
+Я пытался выписывать в рекурсии, однако функция выписовала все возможные ходы вместо оптимальных. Не знаю, как выписать только оптимальные (которые привели к результату).
+
+Код: https://gist.github.com/Ragnok123/e5a89d2998aa01a2d3d9d3f94a9f6091

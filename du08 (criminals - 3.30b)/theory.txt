@@ -1,0 +1,26 @@
+Seznam:
+
+add(Peter)
+- Peter
+add(John)
+- John
+- Peter
+add(Joe)
+-Joe
+-John 
+- Peter
+add(Maria)
+-Maria  - a                 (0)
+-Joe    -a.next             (1)
+-John   -a.next.next        (2)
+- Peter -a.next.next.next   (3)
+
+addContact(a, a.next)
+-Maria (0)
+    Joe(1)
+- Joe (1)
+- John (2)
+- Peter (3)
+
+clone(a){
+}
