@@ -84,55 +84,6 @@ int minimax(int player, int array[], int left, int right, int totalScore, int ta
     return 0;
 }
 
-int minValueForPlayerB(int arr[], int takeTwo, int takeTwoB, int left, int right, int offset1L, int offset1R, int offset2L, int offset2R, int offset3L, int offset3R, int offset4L, int offset4R, int offset5L, int offset5R){
-    return (takeTwoB ? Min5(
-        solveBroken(arr,left+offset1L,right+offset1R,1, 1), //takes 1
-        solveBroken(arr,left+offset2L,right+offset2R,1,1),
-        solveBroken(arr,left+offset3L,right+offset3R,takeTwo,0), //takes 2 
-        solveBroken(arr,left+offset4L,right+offset4R,takeTwo,0),
-        solveBroken(arr,left+offset5L,right+offset5R,takeTwo,0)
-    ) : Min( solveBroken(arr,left+offset1L,right+offset1R, 1,1), //takes 1
-        solveBroken(arr,left+offset2L,right+offset2R,1, 1)));
-}
-
-int solveBroken(int arr[], int left, int right, int takeTwo, int takeTwoB){
-    if(left>right) return 0;
-    if(left==right) return arr[left];
-    int option1 = arr[left] + minValueForPlayerB(arr, 1, takeTwoB, left, right, 2, 0, 1, -1, 3, 0, 0, -2, 2, -1); //left
-    int option2 = arr[right] + minValueForPlayerB(arr,1, takeTwoB, left, right, 1, -1, 0, -2, 2, -1, 0, -3, 1, -2); //right
-    if(takeTwo){
-        int option3 = arr[left] + arr[left+1] + minValueForPlayerB(arr, 0, takeTwoB, left, right, 3, 0, 2, -1, 4, 0, 2, -2, 3, -1);
-        int option4 = arr[right] + arr[right-1] + minValueForPlayerB(arr, 0, takeTwoB, left, right, 1, -2, 0, -3, 2, -2, 0, -4, 1, -3);
-        int option5 = arr[left] + arr[right] + minValueForPlayerB(arr, 0, takeTwoB, left, right, 2, -1, 1, -2, 3, -1, 1, -3, 2, -2);
-        int maxOption = Max5(option1, option2, option3, option4, option5);
-        //if(maxOption == option1){
-        //    optimalMove = 1;
-        //} else if(maxOption == option2){
-        //    optimalMove = 2;
-        //} else if(maxOption == option3){
-        //    optimalMove = 3;
-        //} else if(maxOption == option4){
-        //    optimalMove = 4;
-        //} else if(maxOption == option5){
-        //    optimalMove = 5;
-        //}
-        return maxOption;
-    }
-    int maxOption = Max(option1, option2);
-    //if(maxOption == option1){
-    //    optimalMove = 1;
-    //} else if(maxOption == option2){
-    //    optimalMove = 2;
-    //}
-    return maxOption;
-}
-
-int maximumAmountBroken(int arr[], int left, int right) {
-    int maxSumA = 0; // solveBroken(arr,0,n-1, 1, 1);
-    //maxSumA = minimax(0, arr, left, right, maxSumA,1,1);
-    return maxSumA;
-}
-
 int main() {
     printf("Zetony:\n");
     while (scanf(" %d ", &tokens[count]) != EOF) {

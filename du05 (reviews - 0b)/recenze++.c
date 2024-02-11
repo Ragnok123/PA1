@@ -171,7 +171,7 @@ int main() {
             replies = (Reply*) realloc(replies,(replyCount+1)*sizeof(Reply));
             char stringYear[5], stringMonth[3], stringDay[3];
             int year, month, day, baseValue;
-            if(scanf(" %4s - %2s - %2s %i %4096s\n", stringYear, stringMonth, stringDay, &baseValue, replies[replyCount].comment) != 5 || baseValue < 1){
+            if(scanf(" %4s - %2s - %2s %i %4096s\n", stringYear, stringMonth, stringDay, &baseValue, replies[replyCount].comment) != 5 || baseValue < 1 || strlen(replies[replyCount].comment) <= 4097){
                 printf("Nespravny vstup.\n");
                 free(replies);
                 return 1;
