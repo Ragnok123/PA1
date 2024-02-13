@@ -72,8 +72,9 @@ int main(){
     }
 
     printf("Zadejte dotazy:\n");
-    int newLoop = 1;
-    while(newLoop){
+    char* buffer;
+    size_t capacity = 0;
+    while(getline(&buffer, &capacity, stdin) != -1){
         int searchId;
         if(scanf(" %i ", &searchId) == 1){
             Student student = array_search(ARRAY, searchId);
@@ -84,8 +85,10 @@ int main(){
             }
         } else {
             printf("Nespravny vstup.\n");
+            free(buffer);
             return 1;
         }
     }
+    free(buffer);
     return 0;
 }

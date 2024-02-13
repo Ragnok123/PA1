@@ -101,6 +101,34 @@ int alreadyContains(int pole[], int size, int value){
     return 0;
 }
 
+TVERSE *pushBack(TVERSE *list, char pole[]){
+    if(list == NULL){
+        TVERSE *kek = (TVERSE*)malloc(sizeof(TVERSE));
+        strcpy(kek->verse, pole);
+        kek->next = NULL;
+        return kek;
+    }
+    TVERSE * tmp = list;
+    while(tmp->next != NULL){
+        tmp = tmp->next;
+    }
+    TVERSE *kek = (TVERSE*)malloc(sizeof(TVERSE));
+    strcpy(kek->verse, pole);
+    list->next = kek;
+    return list;
+}
+
+TVERSE *reverse(TVERSE *list){
+    TVERSE * tmp = list;
+    TVERSE * newNode = NULL;
+    while(tmp != NULL){
+        newNode = createVerse(newNode, tmp->verse);
+        tmp = tmp->next;
+    }
+    freeList(list);
+    return newNode;
+}
+
 TVERSE * vogonPoetry(const TVERSE * list) {
     TVERSE * newNode = NULL;
     const TVERSE * tmp = list;
@@ -110,7 +138,7 @@ TVERSE * vogonPoetry(const TVERSE * list) {
     for(; tmp; tmp = tmp->next){
         //printf("2 called");
         Pool[index] = numericPower(tmp->verse);
-        printf(" - Verse %i has %i chars\n", index+1, numericPower(tmp->verse));
+        //printf(" - Verse %i has %i chars\n", index+1, numericPower(tmp->verse));
         index++;
     }
     tmp = list;
@@ -126,8 +154,8 @@ TVERSE * vogonPoetry(const TVERSE * list) {
         if(!alreadyContains(Pool2, index, Pool[i])){
             Pool2[pool2Idx++] = Pool[i];        // 1 2 4 5
             Pool3[size++] = i;
-            printf("+ Verse[%i]: %i\n", i+1, Pool[i]);
-            printf("Pool[%i]: %i\n", size, i+1);
+            //printf("+ Verse[%i]: %i\n", i+1, Pool[i]);
+            //printf("Pool[%i]: %i\n", size, i+1);
         }
     }
 
@@ -140,6 +168,8 @@ TVERSE * vogonPoetry(const TVERSE * list) {
         }
         index++;
     }
+
+    newNode = reverse(newNode);
 
     free(Pool);
     free(Pool2);
@@ -159,43 +189,49 @@ int main() {
     printf("LVL 1\n");
     TVERSE * tmp1 = createVerse(createVerse(createVerse(createVerse(createVerse(createVerse(createVerse(createVerse(NULL, "untbugglyOh freddled gr"), "cturations are toThy mi"), "reddled gruntbugglyOh f"), "on a lurgid bee"), "As plurdled gabbleblotchits"), "dled gruntbugglyOh fred"), "Thy micturations are to"), "Oh freddled gruntbuggly");
     TVERSE * lvl1 = vogonPoetry(tmp1);
-    printTree(tmp1);
-    printTree(lvl1);
+//    printTree(tmp1);
+//    printTree(lvl1);
  
     // ---LVL 2--- //
     //printf("LVL 2\n");
     TVERSE * tmp2 = createVerse(createVerse(NULL, "seMASjak*666*AhoJ"), "Ahoj, jak se mas");
-    //TVERSE * lvl2 = vogonPoetry(tmp2);
+    TVERSE * lvl2 = vogonPoetry(tmp2);
  
-    //assert(strcmp(lvl2->verse, "Ahoj, jak se mas") == 0
-    //       && lvl2->next == NULL );
+    assert(strcmp(lvl2->verse, "Ahoj, jak se mas") == 0
+           && lvl2->next == NULL );
  
     // ---LVL 3--- //
     //printf("LVL 3\n");
     TVERSE * tmp3 = createVerse(createVerse(createVerse(NULL, "cbacba"), "bbb"), "abcabc");
-    //TVERSE * lvl3 = vogonPoetry(tmp3);
+    TVERSE * lvl3 = vogonPoetry(tmp3);
+
+    //printTree(tmp3);
+    //printTree(lvl3);
  
-    //assert(strcmp(lvl3->verse, "abcabc") == 0
-    //       && strcmp(lvl3->next->verse, "bbb") == 0
-    //       && lvl3->next->next == NULL );
+    assert(strcmp(lvl3->verse, "abcabc") == 0
+           && strcmp(lvl3->next->verse, "bbb") == 0
+           && lvl3->next->next == NULL );
  
     // ---LVL 4--- //
     //printf("LVL 4\n");
     TVERSE * tmp4 = createVerse(createVerse(createVerse(createVerse(createVerse(createVerse(createVerse(NULL, " AA  bbcc"), "bcab  CA"), "abca  BC"), "b aaa"), "aa  ab"), "  *"), "    ");
-    //TVERSE * lvl4 = vogonPoetry(tmp4);
+    TVERSE * lvl4 = vogonPoetry(tmp4);
+
+    printTree(tmp4);
+    printTree(lvl4);
  
-    //assert(strcmp(lvl4->verse, "    ") == 0
-    //       && strcmp(lvl4->next->verse, "aa  ab") == 0
-    //       && strcmp(lvl4->next->next->verse, "abca  BC") == 0
-    //       && lvl4->next->next->next == NULL );
+    assert(strcmp(lvl4->verse, "    ") == 0
+           && strcmp(lvl4->next->verse, "aa  ab") == 0
+           && strcmp(lvl4->next->next->verse, "abca  BC") == 0
+           && lvl4->next->next->next == NULL );
  
     // ---LVL 5--- //
     //printf("LVL 5\n");
     TVERSE * tmp5 = createVerse(createVerse(createVerse(createVerse(NULL, "prejtojeee"), "eR88*@8t*@(*(^%#*)o        EP7Je@!e      1J"), "PJEEErToej"), "Prej To JEEE");
-    //TVERSE * lvl5 = vogonPoetry(tmp5);
+    TVERSE * lvl5 = vogonPoetry(tmp5);
  
-    //assert(strcmp(lvl5->verse, "Prej To JEEE") == 0
-    //       && lvl5->next == NULL );
+    assert(strcmp(lvl5->verse, "Prej To JEEE") == 0
+           && lvl5->next == NULL );
  
     // END //
     freeList(tmp1);
@@ -205,9 +241,9 @@ int main() {
     freeList(tmp5);
  
     freeList(lvl1);
-//    freeLis(lvl2);
-//    freeLis(lvl3);
-//    freeLis(lvl4);
-//    freeLis(lvl5);
+    freeList(lvl2);
+    freeList(lvl3);
+    freeList(lvl4);
+    freeList(lvl5);
     return 0;
 }
